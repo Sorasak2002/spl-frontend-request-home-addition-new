@@ -39,9 +39,13 @@ export const getLightTheme = () =>
             "& .MuiOutlinedInput-root": {
               borderRadius: 12,
               backgroundColor: "#FFFFFF",
-              fontSize: 20,
             },
           },
+        },
+      },
+      MuiIconButton: {
+        defaultProps: {
+          className: "btn-hover-scale",
         },
       },
       MuiButton: {
@@ -104,10 +108,15 @@ export const getDarkTheme = () =>
         styleOverrides: {
           root: {
             "& .MuiOutlinedInput-root": {
-              borderRadius: 12,
               backgroundColor: "#252022",
+              borderRadius: 12,
             },
           },
+        },
+      },
+      MuiIconButton: {
+        defaultProps: {
+          className: "btn-hover-scale",
         },
       },
       MuiButton: {

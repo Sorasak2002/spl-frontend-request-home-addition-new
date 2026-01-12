@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Drawer,
   List,
@@ -14,11 +14,8 @@ import {
   Typography,
   Divider,
   Tooltip,
-  MenuItem,
+  Collapse,
 } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { usePathname, useRouter } from "next/navigation";
 import { createAlert, useAlert } from "../alert";
 import { colors } from "@/configs/colorConfig";
@@ -26,26 +23,18 @@ import { useThemeMode } from "@/contexts/ThemeContext";
 import UserProfile from "./UserProfile";
 import { MenuIcon } from "../shared/motion-icons/MenuIcon";
 import { ChevronLeftIcon } from "../shared/motion-icons/ChevronLeft";
+import {
+  NAVIGATION_MENU_ITEMS,
+  SIDEBAR_WIDTH_CLOSED,
+  SIDEBAR_WIDTH_OPEN,
+} from "@/data/navigation";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 type SidebarProps = {
   open?: boolean;
   onToggle?: () => void;
 };
-
-interface MenuItem {
-  text: string;
-  icon: React.ReactNode;
-  path: string;
-}
-
-const SIDEBAR_WIDTH_OPEN = 260;
-const SIDEBAR_WIDTH_CLOSED = 72;
-
-const menuItems: MenuItem[] = [
-  { text: "Home", icon: <HomeIcon />, path: "/home" },
-  { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
-  { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
-];
 
 const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
   const router = useRouter();
@@ -53,6 +42,9 @@ const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
   const { mode } = useThemeMode();
   const pathname = usePathname();
   const [internalOpen, setInternalOpen] = useState(true);
+  const [expandedMenus, setExpandedMenus] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   // Use controlled or internal state
   const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
@@ -61,6 +53,12 @@ const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
 
   const handleNavigation = (path: string) => {
     router.push(path);
+
+    // ถ้ามีการเลือก page ตรงเมนูถ้าไม่ได้เลือก sub เมนูให้ปิดเมนูแบบ auto
+    const targetItem = NAVIGATION_MENU_ITEMS.find((item) => item.path === path);
+    if (targetItem && !targetItem.subItems) {
+      setExpandedMenus({});
+    }
   };
 
   const handleLogout = () => {
@@ -74,6 +72,29 @@ const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
         () => {}
       )
     );
+  };
+
+  useEffect(() => {
+    NAVIGATION_MENU_ITEMS.forEach((item) => {
+      if (item.subItems) {
+        const isSubItemActive = item.subItems.some(
+          (subItem) => pathname === subItem.path
+        );
+        if (isSubItemActive) {
+          setExpandedMenus((prev) => ({
+            ...prev,
+            [item.text]: true,
+          }));
+        }
+      }
+    });
+  }, [pathname]);
+
+  const handleMenuToggle = (menuText: string) => {
+    setExpandedMenus((prev) => ({
+      ...prev,
+      [menuText]: !prev[menuText],
+    }));
   };
 
   return (
@@ -118,7 +139,8 @@ const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
               fontSize: 40,
               color: mode === "dark" ? colors.logo.dark : colors.logo.light,
             }}
-            className="font-psl-kittithada "
+            variant="h1"
+            className="font-psl-kittithada"
           >
             SUPALAI
           </Typography>
@@ -132,63 +154,247 @@ const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
 
       {/* FIXME: Menu Items */}
       <List sx={{ flexGrow: 1, pt: 2 }}>
-        {menuItems.map((item) => (
-          <Tooltip
-            key={item.text}
-            title={!isOpen ? item.text : ""}
-            placement="right"
-          >
-            <ListItem disablePadding sx={{ px: 1, mb: 0.5 }}>
-              <ListItemButton
-                onClick={() => handleNavigation(item.path)}
-                selected={pathname === item.path}
-                sx={{
-                  borderRadius: 2,
-                  minHeight: 48,
-                  justifyContent: isOpen ? "initial" : "center",
-                  px: 2.5,
-                  "&:hover": {
-                    backgroundColor: "secondary.main",
-                  },
-                  "&.Mui-selected": {
-                    backgroundColor: "primary.main",
-                    color: "primary.contrastText",
-                    "&:hover": {
-                      backgroundColor: "primary.dark",
-                    },
-                    "& .MuiListItemIcon-root": {
-                      color: "primary.contrastText",
-                    },
-                    "& .MuiListItemText-primary": {
-                      color: "primary.contrastText",
-                    },
-                  },
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: isOpen ? 2 : "auto",
-                    justifyContent: "center",
-                    color: pathname === item.path ? "inherit" : "primary.main",
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                {isOpen && (
-                  <ListItemText
-                    primary={item.text}
-                    primaryTypographyProps={{
-                      fontSize: "0.875rem",
-                      fontWeight: 500,
-                      color: "text.primary",
+        {NAVIGATION_MENU_ITEMS.map((item) => {
+          // มี sub menu หรือป่าว
+          const isSubItemActive = item.subItems
+            ? item.subItems.some((subItem) => pathname === subItem.path)
+            : false;
+
+          // เป็น page ที่ถูกเลือกหรือป่าว
+          const isCurrentPageActive = pathname === item.path;
+
+          return (
+            <Box key={item.text}>
+              {/* FIXME: root menu session */}
+              <Tooltip title={!isOpen ? item.text : ""} placement="right">
+                <ListItem disablePadding sx={{ px: 1, mb: 0.5 }}>
+                  <ListItemButton
+                    onClick={() => {
+                      if (item.subItems) {
+                        if (isOpen) {
+                          handleMenuToggle(item.text);
+                        } else {
+                          handleToggle();
+                          setTimeout(() => handleMenuToggle(item.text), 100);
+                        }
+                      } else {
+                        handleNavigation(item.path);
+                      }
                     }}
-                  />
-                )}
-              </ListItemButton>
-            </ListItem>
-          </Tooltip>
-        ))}
+                    selected={pathname === item.path}
+                    sx={{
+                      borderRadius: 1,
+                      minHeight: 48,
+                      justifyContent: isOpen ? "initial" : "center",
+                      px: 2.5,
+                      transition: (theme) =>
+                        theme.transitions.create(
+                          ["background-color", "color"],
+                          {
+                            duration: theme.transitions.duration.shorter,
+                          }
+                        ),
+                      ...(isSubItemActive &&
+                        !isCurrentPageActive && {
+                          backgroundColor: (theme) =>
+                            theme.palette.mode === "dark"
+                              ? "rgba(125, 97, 103, 0.15)"
+                              : "rgba(125, 97, 103, 0.08)",
+                        }),
+                      "&:hover": {
+                        backgroundColor: "action.hover",
+                      },
+                      "&.Mui-selected": {
+                        backgroundColor: "primary.main",
+                        color: "primary.contrastText",
+                        "&:hover": {
+                          backgroundColor: "primary.dark",
+                        },
+                        "& .MuiListItemIcon-root": {
+                          color: "primary.contrastText",
+                        },
+                        "& .MuiListItemText-primary": {
+                          color: "primary.contrastText",
+                        },
+                      },
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: isOpen ? 2 : "auto",
+                        justifyContent: "center",
+                        color:
+                          pathname === item.path ? "inherit" : "primary.main",
+                        // isCurrentPageActive || isSubItemActive
+                        //   ? "inherit"
+                        //   : "primary.main",
+                        transition: (theme) =>
+                          theme.transitions.create("color", {
+                            duration: theme.transitions.duration.shorter,
+                          }),
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    {isOpen && (
+                      <>
+                        <ListItemText
+                          primary={item.text}
+                          primaryTypographyProps={{
+                            fontSize: "0.875rem",
+                            fontWeight: 500,
+                            color:
+                              pathname === item.path
+                                ? "inherit"
+                                : "primary.main",
+                          }}
+                          sx={{
+                            "& .MuiTypography-root": {
+                              transition: (theme) =>
+                                theme.transitions.create("color", {
+                                  duration: theme.transitions.duration.shorter,
+                                }),
+                            },
+                          }}
+                        />
+                        {/* FIXME: เพิ่ม arrow icon กรณีมี sub menu */}
+                        {item.subItems &&
+                          (expandedMenus[item.text] ? (
+                            <KeyboardArrowDownIcon
+                              sx={{
+                                fontSize: 20,
+                                color:
+                                  pathname === item.path
+                                    ? "inherit"
+                                    : "primary.main",
+                                transition: (theme) =>
+                                  theme.transitions.create(
+                                    ["transform", "opacity"],
+                                    {
+                                      duration:
+                                        theme.transitions.duration.shorter,
+                                    }
+                                  ),
+                              }}
+                            />
+                          ) : (
+                            <KeyboardArrowRightIcon
+                              sx={{
+                                fontSize: 20,
+                                color:
+                                  pathname === item.path
+                                    ? "inherit"
+                                    : "primary.main",
+                                transition: (theme) =>
+                                  theme.transitions.create(
+                                    ["transform", "opacity"],
+                                    {
+                                      duration:
+                                        theme.transitions.duration.shorter,
+                                    }
+                                  ),
+                              }}
+                            />
+                          ))}
+                      </>
+                    )}
+                  </ListItemButton>
+                </ListItem>
+              </Tooltip>
+
+              {/* FIXME: sub menu session */}
+              {item.subItems && isOpen && (
+                <Collapse
+                  in={expandedMenus[item.text]}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
+                    {item.subItems.map((subItem) => (
+                      <ListItem
+                        key={subItem.text}
+                        disablePadding
+                        sx={{ px: 0.8, mb: 0.5 }}
+                      >
+                        <ListItemButton
+                          onClick={() => handleNavigation(subItem.path)}
+                          selected={pathname === subItem.path}
+                          sx={{
+                            borderRadius: 1,
+                            minHeight: 40,
+                            pl: 4,
+                            transition: (theme) =>
+                              theme.transitions.create(
+                                ["background-color", "color", "transform"],
+                                {
+                                  duration: theme.transitions.duration.shorter,
+                                }
+                              ),
+                            "&:hover": {
+                              backgroundColor: "action.hover",
+                            },
+                            "&.Mui-selected": {
+                              backgroundColor: "primary.light",
+                              color: "primary.contrastText",
+                              "&:hover": {
+                                backgroundColor: "primary.main",
+                              },
+                              "& .MuiListItemIcon-root": {
+                                color: "primary.contrastText",
+                              },
+                              "& .MuiListItemText-primary": {
+                                color: "primary.contrastText",
+                              },
+                            },
+                          }}
+                        >
+                          <ListItemIcon
+                            sx={{
+                              minWidth: 0,
+                              mr: 2,
+                              justifyContent: "center",
+                              color:
+                                pathname === subItem.path
+                                  ? "inherit"
+                                  : "primary.main",
+                              transition: (theme) =>
+                                theme.transitions.create("color", {
+                                  duration: theme.transitions.duration.shorter,
+                                }),
+                            }}
+                          >
+                            {subItem.icon}
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={subItem.text}
+                            primaryTypographyProps={{
+                              fontSize: "0.8rem",
+                              fontWeight: 500,
+                              color:
+                                pathname === item.path
+                                  ? "inherit"
+                                  : "primary.main",
+                            }}
+                            sx={{
+                              "& .MuiTypography-root": {
+                                transition: (theme) =>
+                                  theme.transitions.create("color", {
+                                    duration:
+                                      theme.transitions.duration.shorter,
+                                  }),
+                              },
+                            }}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              )}
+            </Box>
+          );
+        })}
       </List>
 
       <Divider />

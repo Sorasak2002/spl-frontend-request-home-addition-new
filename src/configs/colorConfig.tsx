@@ -19,7 +19,7 @@ export const colors = {
 
   // Background
   background: {
-    default: "#C4A48A", // Warm tan
+    default: "#FFFFFF", //"#C4A48A", // Warm tan
     paper: "#FFFFFF",
     subtle: "#F8F8FA", // สำหรับ section (เช่น login form)
   },
@@ -84,6 +84,27 @@ export const colors = {
   logo: {
     light: "#57240F",
     dark: "#C4893E",
+  },
+
+  dashboardSection: {
+    // Document Creation Colors
+    createDoc: "#8280FF", // สร้างเอกสาร
+    reqConstructionApproval: "#FF6200", // ขอความเห็นชอบแบบ
+    reqConstructionApproved: "#13C39C", // เห็นชอบแบบ
+    reqConstructionRejected: "#E57373", // แก้ไขแบบ
+
+    // Departments/Operations Colors
+    addInProgress: "#FF6200", //ดำเนินการต่อเติม
+    docSetPayback: "#FF00B7", //ตั้งเรื่องคืนเงิน
+    damageCheck: "#FFEA48", //ตรวจสอบความเสียหาย
+    reqConstMgrApproval: "#6364B9", //รอ ผจก. ก่อสร้างอนุมัติ
+    reqConstMgrRejected: "#E57373", //ผจก. ก่อสร้างส่งกลับแก้ไข
+
+    // Finance & Accounting Colors
+    reqAccReceiveApproval: "#189FFF", //รอ บช. ฝ่ายรับ อนุมัติ
+    reqAccReceiveRejected: "#E57373", //บช. ฝ่ายรับ ส่งกลับแก้ไข
+    accPayChangeStatus: "#81559D", //รอ บช. ฝ่ายจ่ายปรับสถานะ
+    finChangeStatus: "#FF0CB6", //รอ การเงินปรับสถานะ
   },
 } as const;
 

@@ -13,7 +13,7 @@ const LoginPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "background.default",
+        bgcolor: "#C4A48A",
         p: 2,
       }}
     >

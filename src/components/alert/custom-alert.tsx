@@ -21,6 +21,7 @@ import {
 } from "@mui/icons-material";
 import type { AlertType } from "./alert-context";
 import { useEffect } from "react";
+import { colors } from "@/configs/colorConfig";
 
 interface CustomAlertProps {
   open: boolean;
@@ -45,23 +46,23 @@ interface CustomAlertProps {
 const alertConfig = {
   success: {
     icon: CheckCircle,
-    color: "#4CAF50",
+    color: colors.success.main,
   },
   error: {
     icon: Error,
-    color: "#F44336",
+    color: colors.error.main,
   },
   warning: {
     icon: Warning,
-    color: "#FF9800",
+    color: colors.warning.main,
   },
   info: {
     icon: Info,
-    color: "#2196F3",
+    color: colors.info.main,
   },
   confirm: {
     icon: HelpOutline,
-    color: "#7D6167",
+    color: colors.primary.main,
   },
 };
 

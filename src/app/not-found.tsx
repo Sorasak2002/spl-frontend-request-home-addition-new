@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { HouseIcon } from "@/components/shared/motion-icons/HouseIcon";
 import { colors } from "@/configs/colorConfig";
 import { CornerUpLeftIcon } from "@/components/shared/motion-icons/CornerUpLeftIcon";
+import { useThemeMode } from "@/contexts/ThemeContext";
 
 interface NotFoundPageProps {
   title?: string;
@@ -18,6 +19,7 @@ const NotFoundPage = ({
   subtitle = "Sorry, we couldn't find the page you're looking for.",
   buttonText = "Back to Home",
 }: NotFoundPageProps) => {
+  const { mode } = useThemeMode();
   const router = useRouter();
 
   const handleBack = () => {
@@ -84,7 +86,9 @@ const NotFoundPage = ({
             <path
               d="M 20 28 Q 30 22, 40 26"
               fill="none"
-              stroke={colors.primary.main}
+              stroke={
+                mode === "dark" ? colors.primary.light : colors.primary.main
+              }
               strokeWidth="4"
               strokeLinecap="round"
             />
@@ -93,22 +97,40 @@ const NotFoundPage = ({
             <path
               d="M 60 26 Q 70 22, 80 28"
               fill="none"
-              stroke={colors.primary.main}
+              stroke={
+                mode === "dark" ? colors.primary.light : colors.primary.main
+              }
               strokeWidth="4"
               strokeLinecap="round"
             />
 
             {/* Left Eye */}
-            <circle cx="30" cy="42" r="6" fill={colors.primary.main} />
+            <circle
+              cx="30"
+              cy="42"
+              r="6"
+              fill={
+                mode === "dark" ? colors.primary.light : colors.primary.main
+              }
+            />
 
             {/* Right Eye */}
-            <circle cx="70" cy="42" r="6" fill={colors.primary.main} />
+            <circle
+              cx="70"
+              cy="42"
+              r="6"
+              fill={
+                mode === "dark" ? colors.primary.light : colors.primary.main
+              }
+            />
 
             {/* Sad Mouth - natural frown curve */}
             <path
               d="M 28 72 Q 50 55, 72 72"
               fill="none"
-              stroke={colors.primary.main}
+              stroke={
+                mode === "dark" ? colors.primary.light : colors.primary.main
+              }
               strokeWidth="5"
               strokeLinecap="round"
             />

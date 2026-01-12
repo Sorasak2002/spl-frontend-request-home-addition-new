@@ -6,6 +6,7 @@ import { CssBaseline } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getDarkTheme, getLightTheme } from "./theme";
+import MuiXLicense from "@/app/MuiXLicense";
 
 type Props = {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ const ThemeRegistry: FC<Props> = ({ children }) => {
     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <ThemeProvider theme={muiTheme}>
         <CssBaseline />
+        <MuiXLicense />
         {children}
       </ThemeProvider>
     </AppRouterCacheProvider>

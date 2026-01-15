@@ -17,6 +17,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import BadgeIcon from "@mui/icons-material/Badge";
 import BusinessIcon from "@mui/icons-material/Business";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { colors } from "@/configs/colorConfig";
 
 const DepositorInformationForm = () => {
   const theme = useTheme();
@@ -37,7 +38,11 @@ const DepositorInformationForm = () => {
       <FormPaper>
         <Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-            <PersonIcon color="primary" sx={{ fontSize: 24 }} />
+            <PersonIcon
+              className="hidden md:flex"
+              color="primary"
+              sx={{ fontSize: 24 }}
+            />
             <Typography
               variant="subtitle1"
               sx={{ fontWeight: 600, color: "primary.main" }}
@@ -230,8 +235,8 @@ const DepositorInformationForm = () => {
                 mb: 2,
                 bgcolor: (theme) =>
                   theme.palette.mode === "dark"
-                    ? `${theme.palette.primary.main}`
-                    : `${theme.palette.primary.main}30`,
+                    ? `${colors.primary.dark}25`
+                    : `${colors.primary.light}25`,
                 borderRadius: 2,
                 border: `1px solid ${theme.palette.primary.main}`,
               }}

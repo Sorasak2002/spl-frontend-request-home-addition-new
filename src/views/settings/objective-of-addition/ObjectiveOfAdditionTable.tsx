@@ -24,6 +24,8 @@ import { GridColDef } from "@mui/x-data-grid-pro";
 import { FC } from "react";
 import { ObjectiveOfAddition } from "./ObjectiveOfAdditionPage";
 import CustomDataGrid from "@/components/mui/CustomDataGrid";
+import { colors } from "@/configs/colorConfig";
+import { useThemeMode } from "@/contexts/ThemeContext";
 
 type Props = {
   row: ObjectiveOfAddition[];
@@ -50,11 +52,15 @@ const ObjectiveOfAdditionTable: FC<Props> = ({
 }) => {
   const theme = useTheme();
 
+  const { mode } = useThemeMode();
+
   const columns: GridColDef[] = [
     {
       field: "name",
       headerName: "ความประสงค์ที่ต้องการจะต่อเติม",
-      width: 800,
+      flex: 1, // ใช้ flex แทน width
+      minWidth: 300,
+      headerClassName: "background-header",
       renderCell: ({ row }) => (
         <Box sx={{ fontWeight: 500, color: "text.primary", fontSize: 15 }}>
           {row.description}
@@ -65,6 +71,7 @@ const ObjectiveOfAdditionTable: FC<Props> = ({
       field: "active",
       headerName: `เปิดใช้งาน`,
       width: 150,
+      headerClassName: "background-header",
       renderCell: ({ row }) => (
         <Switch checked={row.isEnabled} onChange={() => onToggle?.(row)} />
       ),
@@ -73,6 +80,7 @@ const ObjectiveOfAdditionTable: FC<Props> = ({
       field: "action",
       headerName: "Action",
       width: 150,
+      headerClassName: "background-header",
       renderCell: ({ row }) => (
         <Box>
           <Tooltip title="แก้ไข">
@@ -99,16 +107,19 @@ const ObjectiveOfAdditionTable: FC<Props> = ({
   ];
 
   return (
-    <Paper
-      elevation={0}
+    <CustomDataGrid
       sx={{
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 2,
-        overflow: "hidden",
+        "& .background-header": {
+          backgroundColor:
+            mode === "dark"
+              ? `${colors.primary.main}25`
+              : `${colors.primary.light}25`,
+          color: "white",
+        },
       }}
-    >
-      <CustomDataGrid rows={row} columns={columns} />
-    </Paper>
+      rows={row}
+      columns={columns}
+    />
   );
 };
 

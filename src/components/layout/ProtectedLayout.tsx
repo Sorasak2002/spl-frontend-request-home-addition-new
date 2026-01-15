@@ -77,6 +77,7 @@ const ProtectedLayout: FC<ProtectedLayoutProps> = ({ children }) => {
         <Box
           sx={{
             p: 3,
+            pb: isMobile ? 10 : 3, // padding-bottom เพิ่มขึ้นเมื่อเป็น mobile
             minHeight: "100vh",
             background: isDark ? gradientDark : gradientLight,
           }}

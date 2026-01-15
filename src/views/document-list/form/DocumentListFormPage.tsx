@@ -24,6 +24,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import SmartStepper from "./smart-stepper/SmartStepper";
 import DocumentForm1 from "./document-form-steps/document-form-1/DocumentForm1";
+import DocumentForm2 from "./document-form-steps/document-form-2/DocumentForm2";
 
 type Props = {
   documentId?: string;
@@ -192,7 +193,7 @@ const DocumentListFormPage: FC<Props> = ({ documentId }) => {
       case 0:
         return <DocumentForm1 />;
       case 1:
-        return <Box sx={{ p: 3 }}>ข้อมูลโครงการ (Coming Soon)</Box>;
+        return <DocumentForm2 />;
       case 2:
         return <Box sx={{ p: 3 }}>ข้อมูลการก่อสร้าง (Coming Soon)</Box>;
       case 3:

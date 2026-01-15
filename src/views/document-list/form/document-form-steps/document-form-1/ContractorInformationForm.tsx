@@ -61,6 +61,7 @@ const ContractorInformationForm = () => {
             <FormControl>
               <InputLabel>ความประสงค์ที่ต้องการจะต่อเติม</InputLabel>
               <Select
+                value="" // เพิ่มบรรทัดนี้
                 label="ความประสงค์ที่ต้องการจะต่อเติม"
                 sx={{
                   bgcolor: "background.paper",

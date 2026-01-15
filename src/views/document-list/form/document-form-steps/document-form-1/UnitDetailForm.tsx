@@ -74,7 +74,13 @@ const UnitDetailForm = () => {
       <FormPaper>
         {/* Project Header */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-          <HomeIcon sx={{ color: "primary.main", fontSize: 28 }} />
+          <HomeIcon
+            sx={{
+              color: "primary.main",
+              fontSize: 28,
+              display: { xs: "none", sm: "block" },
+            }}
+          />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="subtitle2"

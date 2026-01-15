@@ -44,7 +44,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({
           px: 3,
           py: 2,
           backgroundColor: isDark
-            ? `${colors.primary.dark}25`
+            ? `${colors.primary.main}25`
             : `${colors.primary.light}25`,
           borderBottom: "1px solid",
           borderColor: "divider",
@@ -92,6 +92,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({
           <Paper
             key={index}
             elevation={0}
+            className="flex justify-between"
             sx={{
               p: 2.5,
               borderRadius: 2,
@@ -109,43 +110,46 @@ const DashboardSection: FC<DashboardSectionProps> = ({
               },
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                mb: 1.5,
-              }}
-            >
+            <Box>
               <Box
                 sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 1.5,
-                  backgroundColor: `${item.color}15`,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  color: item.color,
-                  "& svg": {
-                    fontSize: 22,
-                  },
+                  gap: 1.5,
+                  mb: 1.5,
                 }}
               >
-                {item.icon}
+                <Box
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 1.5,
+                    backgroundColor: `${item.color}15`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: item.color,
+                    "& svg": {
+                      fontSize: 22,
+                    },
+                  }}
+                >
+                  {item.icon}
+                </Box>
               </Box>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "text.secondary",
+                  fontSize: "0.875rem",
+                  mb: 1,
+                  lineHeight: 1.4,
+                }}
+              >
+                {item.label}
+              </Typography>
             </Box>
-            <Typography
-              variant="body2"
-              sx={{
-                color: "text.secondary",
-                fontSize: "0.875rem",
-                mb: 1,
-                lineHeight: 1.4,
-              }}
-            >
-              {item.label}
-            </Typography>
+
             <Typography
               variant="h5"
               sx={{

@@ -99,6 +99,7 @@ const ObjectiveOfAdditionPage = () => {
     <Box>
       <ObjectiveOfAdditionHeader onCreate={handleCreate} />
 
+      {/* FIXME: Table */}
       <Box sx={{ mt: 3 }}>
         <ObjectiveOfAdditionTable
           row={row}

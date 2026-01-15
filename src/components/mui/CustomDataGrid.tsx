@@ -10,6 +10,7 @@ const DataGridPro = dynamic(
   () => import("@mui/x-data-grid-pro").then((mod) => mod.DataGridPro),
   {
     ssr: false, // บรรทัดนี้สำคัญ คือบอกว่าไม่ต้อง render ที่ server
+
     loading: () => (
       <Box
         sx={{
@@ -45,7 +46,7 @@ const CustomDataGrid = (props: DataGridProProps) => {
       sx={{
         ...props.sx,
         border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 2,
+        borderRadius: 1.5,
         bgcolor: "background.paper",
         "& .MuiDataGrid-columnHeaders": {
           backgroundColor:

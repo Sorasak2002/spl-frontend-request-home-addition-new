@@ -22,6 +22,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import { SunIcon, SunIconHandle } from "../shared/motion-icons/SunIcon";
 import { MoonIcon, MoonIconHandle } from "../shared/motion-icons/MoonIcon";
 import { BoltIcon, BoltIconHandle } from "../shared/motion-icons/BoltIcon";
+import useDarkMode from "@/hooks/useDarkMode";
+import { colors } from "@/configs/colorConfig";
 
 interface UserProfile {
   name: string;
@@ -36,6 +38,8 @@ type Props = {
 
 const UserProfile: FC<Props> = ({ isOpen, handleLogout }) => {
   const { mode, setMode } = useThemeMode();
+
+  const isDarkMode = useDarkMode()
 
   const [profileMenuAnchor, setProfileMenuAnchor] =
     useState<null | HTMLElement>(null);
@@ -83,6 +87,7 @@ const UserProfile: FC<Props> = ({ isOpen, handleLogout }) => {
     if (mode === "dark") return <MoonIcon ref={moonIconRef} />;
     return <BoltIcon ref={boltIconRef} />;
   };
+
   /* #region FIXME: icon ref */
   const logoutIconRef = useRef<LogoutIconHandle>(null);
   const sunIconRef = useRef<SunIconHandle>(null);
@@ -211,7 +216,7 @@ const UserProfile: FC<Props> = ({ isOpen, handleLogout }) => {
                 sx={{
                   width: 40,
                   height: 40,
-                  backgroundColor: "primary.main",
+                  backgroundColor: isDarkMode ? colors.primary.dark : colors.primary.main,
                 }}
               >
                 {user.name.charAt(0)}

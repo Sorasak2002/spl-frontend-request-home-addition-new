@@ -1,8 +1,10 @@
 "use client";
 
-import { Box, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { FC, useState } from "react";
 import Sidebar from "./Sidebar";
+import MobileBottomNavigation from "./MobileBottomNavigation";
+import { SIDEBAR_WIDTH_CLOSED, SIDEBAR_WIDTH_OPEN } from "@/data/navigation";
 
 type ProtectedLayoutProps = {
   children: React.ReactNode;
@@ -13,6 +15,8 @@ const ProtectedLayout: FC<ProtectedLayoutProps> = ({ children }) => {
 
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const gradientLight =
     "linear-gradient(to bottom, " +
@@ -43,16 +47,28 @@ const ProtectedLayout: FC<ProtectedLayoutProps> = ({ children }) => {
     "rgba(18, 18, 18, 0) 15%)";
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Sidebar
-        open={sidebarOpen}
-        onToggle={() => setSidebarOpen(!sidebarOpen)}
-      />
+    <Box sx={{ display: "flex", width: "auto" }}>
+      {!isMobile && (
+        <Sidebar
+          open={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
+        />
+      )}
 
       <Box
         component="main"
         sx={{
           flexGrow: 1,
+          // marginLeft: isMobile
+          //   ? 0
+          //   : sidebarOpen
+          //   ? `${SIDEBAR_WIDTH_OPEN}px`
+          //   : `${SIDEBAR_WIDTH_CLOSED}px`,
+          transition: "margin-left 0.3s ease-in-out",
+          width: isMobile
+            ? "100%"
+            : `calc(100% - ${sidebarOpen ? SIDEBAR_WIDTH_OPEN : SIDEBAR_WIDTH_CLOSED
+            }px)`,
           backgroundColor: "secondary.main",
           minHeight: "100vh",
         }}
@@ -67,6 +83,8 @@ const ProtectedLayout: FC<ProtectedLayoutProps> = ({ children }) => {
           {children}
         </Box>
       </Box>
+
+      {isMobile && <MobileBottomNavigation />}
     </Box>
   );
 };

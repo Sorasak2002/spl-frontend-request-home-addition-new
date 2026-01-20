@@ -22,6 +22,7 @@ import { CornerUpRightIcon } from "@/components/shared/motion-icons/CornerUpRigh
 import { useRouter } from "next/navigation";
 import { useAlert } from "@/components/alert";
 import { useThemeMode } from "@/contexts/ThemeContext";
+import useDarkMode from "@/hooks/useDarkMode";
 
 // TODO: Root Function
 const LoginForm = () => {
@@ -147,7 +148,7 @@ const LoginForm = () => {
 
 // FIXME: Sub Function
 const LoginHeader = () => {
-  const { mode } = useThemeMode();
+  const isDarkMode = useDarkMode()
   return (
     <Box
       sx={{
@@ -162,7 +163,7 @@ const LoginHeader = () => {
       <Typography
         sx={{
           fontSize: { xs: 80, md: 100 },
-          color: mode === "dark" ? colors.logo.dark : colors.logo.light,
+          color: isDarkMode ? colors.logo.dark : colors.logo.light,
           marginBottom: { xs: -5, md: -6 },
         }}
         className="font-psl-kittithada"

@@ -17,6 +17,7 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 import { colors } from "@/configs/colorConfig";
+import CustomIconButton from "@/components/mui/CustomIconButton";
 
 const DashboardFilter = () => {
   const [category, setCategory] = useState("");
@@ -84,20 +85,12 @@ const DashboardFilter = () => {
 
         <Box sx={{ display: "flex", gap: 1 }}>
           <Tooltip title="Search">
-            <IconButton
-              className="btn-hover-scale"
-              sx={{
-                backgroundColor: colors.primary.main,
-                color: "white",
-                "&:hover": { backgroundColor: colors.primary.hover },
-              }}
-            >
+            <CustomIconButton sx={{ color: 'white' }} >
               <SearchIcon />
-            </IconButton>
+            </CustomIconButton>
           </Tooltip>
           <Tooltip title="Reset">
-            <IconButton
-              className="btn-hover-scale"
+            <CustomIconButton
               onClick={handleReset}
               sx={{
                 backgroundColor: "action.hover",
@@ -105,7 +98,7 @@ const DashboardFilter = () => {
               }}
             >
               <RefreshIcon />
-            </IconButton>
+            </CustomIconButton>
           </Tooltip>
         </Box>
       </Box>

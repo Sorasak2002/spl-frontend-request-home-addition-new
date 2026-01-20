@@ -105,6 +105,7 @@ export const getDarkTheme = () =>
     },
     components: {
       MuiTextField: {
+
         styleOverrides: {
           root: {
             "& .MuiOutlinedInput-root": {
@@ -120,6 +121,9 @@ export const getDarkTheme = () =>
         },
       },
       MuiButton: {
+        defaultProps: {
+          className: "btn-hover-scale",
+        },
         styleOverrides: {
           root: {
             borderRadius: 12,

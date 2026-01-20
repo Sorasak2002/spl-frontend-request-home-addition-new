@@ -83,7 +83,6 @@ const UserProfile: FC<Props> = ({ isOpen, handleLogout }) => {
     if (mode === "dark") return <MoonIcon ref={moonIconRef} />;
     return <BoltIcon ref={boltIconRef} />;
   };
-
   /* #region FIXME: icon ref */
   const logoutIconRef = useRef<LogoutIconHandle>(null);
   const sunIconRef = useRef<SunIconHandle>(null);
@@ -372,15 +371,15 @@ const LogoutButton = ({
           mode === "dark"
             ? handleMoonHover()
             : mode === "light"
-            ? handleSunHover()
-            : handleBoltHover()
+              ? handleSunHover()
+              : handleBoltHover()
         }
         onMouseLeave={() =>
           mode === "dark"
             ? handleMoonLeave()
             : mode === "light"
-            ? handleSunLeave()
-            : handleBoltLeave()
+              ? handleSunLeave()
+              : handleBoltLeave()
         }
       >
         <ListItemIcon>{getThemeIcon()}</ListItemIcon>

@@ -11,6 +11,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { FC } from "react";
+import CustomButton from "@/components/mui/CustomButton";
 
 type DocumentFiltersProps = {
   documentNumberFilter: string;
@@ -76,24 +77,22 @@ const DocumentFilter: FC<DocumentFiltersProps> = ({
           <MenuItem value="Completed">Completed</MenuItem>
           <MenuItem value="Rejected">Rejected</MenuItem>
         </TextField>
-        <Button
+        <CustomButton
           variant="contained"
           startIcon={<SearchIcon />}
           onClick={onSearch}
           size="small"
-          sx={{
-            backgroundColor: "primary.main",
-            "&:hover": {
-              backgroundColor: "primary.dark",
-            },
-            textTransform: "none",
-          }}
         >
           ค้นหา
-        </Button>
-        <Button variant="outlined" onClick={onReset} size="small">
+        </CustomButton>
+        <CustomButton variant="outlined" onClick={onReset} size="small"
+          sx={{
+            backgroundColor: 'none', "&:hover": {
+              backgroundColor: 'none',
+            },
+          }} >
           <RefreshIcon />
-        </Button>
+        </CustomButton>
       </Box>
     </Paper>
   );

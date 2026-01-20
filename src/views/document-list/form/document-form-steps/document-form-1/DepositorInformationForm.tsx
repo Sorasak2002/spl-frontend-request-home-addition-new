@@ -28,7 +28,7 @@ const DepositorInformationForm = () => {
         sx={{
           fontWeight: 600,
           mb: 2,
-          borderBottom: `3px solid ${theme.palette.primary.main}`,
+          borderBottom: `3px solid ${colors.primary.main}`,
           display: "inline-block",
         }}
       >

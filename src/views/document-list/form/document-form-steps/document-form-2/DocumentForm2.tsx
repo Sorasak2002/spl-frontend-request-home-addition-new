@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DropzoneUpload, { FileWithPreview } from "./DropzoneUpload";
+import { colors } from "@/configs/colorConfig";
 
 const MAX_FILES = 2;
 const ACCEPTED_FILE_TYPES = {
@@ -106,7 +107,7 @@ const DocumentForm2 = () => {
           sx={{
             fontWeight: 600,
             mb: 2,
-            borderBottom: `3px solid ${theme.palette.primary.main}`,
+            borderBottom: `3px solid ${colors.primary.main}`,
             display: "inline-block",
           }}
         >

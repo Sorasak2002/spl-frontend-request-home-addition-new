@@ -1,19 +1,5 @@
-"use client";
-
-import {
-  Box,
-  Button,
-  Paper,
-  Step,
-  StepConnector,
-  stepConnectorClasses,
-  StepLabel,
-  Stepper,
-  styled,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+"use client";;
+import { Box, Paper, StepConnector, stepConnectorClasses, styled, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 
@@ -25,6 +11,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import SmartStepper from "./smart-stepper/SmartStepper";
 import DocumentForm1 from "./document-form-steps/document-form-1/DocumentForm1";
 import DocumentForm2 from "./document-form-steps/document-form-2/DocumentForm2";
+import CustomButton from "@/components/mui/CustomButton";
 
 type Props = {
   documentId?: string;
@@ -239,27 +226,33 @@ const DocumentListFormPage: FC<Props> = ({ documentId }) => {
           gap: 2,
         }}
       >
-        <Button
+        <CustomButton
           variant="outlined"
           onClick={handleBack}
           disabled={activeStep === 0}
           startIcon={<ArrowBackIcon />}
+          sx={{
+            backgroundColor: 'none',
+            "&:hover": {
+              backgroundColor: 'none',
+            },
+          }}
         >
           ย้อนกลับ
-        </Button>
+        </CustomButton>
         {activeStep === steps.length - 1 ? (
-          <Button onClick={onSubmit} color="success" variant="contained">
+          <CustomButton onClick={onSubmit} color="success" variant="contained">
             Submit
-          </Button>
+          </CustomButton>
         ) : (
-          <Button
+          <CustomButton
             type="button"
             variant="contained"
             onClick={handleNext}
             endIcon={<ArrowForwardIcon />}
           >
             ถัดไป
-          </Button>
+          </CustomButton>
         )}
       </Box>
     </Box>

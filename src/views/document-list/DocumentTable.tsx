@@ -12,9 +12,8 @@ const mockDocuments: any[] = Array.from({ length: 25 }, (_, i) => ({
   documentNumber: `DOC-2024-${String(i + 1).padStart(4, "0")}`,
   daysUntilExpiry: Math.floor(Math.random() * 90) + 1,
   projectName: `Project ${String.fromCharCode(65 + (i % 10))}`,
-  plotNumber: `${Math.floor(Math.random() * 100) + 1}-${
-    Math.floor(Math.random() * 20) + 1
-  }`,
+  plotNumber: `${Math.floor(Math.random() * 100) + 1}-${Math.floor(Math.random() * 20) + 1
+    }`,
   creator: `User ${Math.floor(Math.random() * 10) + 1}`,
   updater: `User ${Math.floor(Math.random() * 10) + 1}`,
   refundDate: new Date(
@@ -72,8 +71,8 @@ const DocumentTable = () => {
   const filteredDocuments = mockDocuments.filter((doc) => {
     const matchesDocNumber = documentNumberFilter
       ? doc.documentNumber
-          .toLowerCase()
-          .includes(documentNumberFilter.toLowerCase())
+        .toLowerCase()
+        .includes(documentNumberFilter.toLowerCase())
       : true;
     const matchesStatus = statusFilter ? doc.status === statusFilter : true;
     return matchesDocNumber && matchesStatus;

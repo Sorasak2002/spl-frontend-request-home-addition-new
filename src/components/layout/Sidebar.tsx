@@ -206,7 +206,7 @@ const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
                         backgroundColor: "action.hover",
                       },
                       "&.Mui-selected": {
-                        backgroundColor: isDarkMode ? colors.primary.dark : colors.primary.main,
+                        backgroundColor: isDarkMode ? colors.primary.light : colors.primary.main,
                         color: "primary.contrastText",
                         "&:hover": {
                           backgroundColor: colors.primary.hover,
@@ -402,7 +402,6 @@ const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
 
       {/* FIXME:  User Profile Section */}
       <UserProfile handleLogout={handleLogout} isOpen={isOpen} />
-      {mode.toString()}
     </Drawer>
   );
 };

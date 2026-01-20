@@ -24,6 +24,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import ImageIcon from "@mui/icons-material/Image";
 import AddIcon from "@mui/icons-material/Add";
+import CustomButton from "@/components/mui/CustomButton";
 
 export interface FileWithPreview extends File {
   preview?: string;
@@ -170,11 +171,10 @@ const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
     <Box
       {...getRootProps()}
       sx={{
-        border: `2px dashed ${
-          isDragActive
-            ? theme.palette.primary.main
-            : alpha(theme.palette.primary.main, 0.5)
-        }`,
+        border: `2px dashed ${isDragActive
+          ? theme.palette.primary.main
+          : alpha(theme.palette.primary.main, 0.5)
+          }`,
         borderRadius: 2,
         backgroundColor: isDragActive
           ? alpha(theme.palette.primary.main, 0.05)

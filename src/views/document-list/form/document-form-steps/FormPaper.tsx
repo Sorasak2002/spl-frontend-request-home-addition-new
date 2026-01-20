@@ -15,10 +15,9 @@ const FormPaper: FC<{ children: React.ReactNode }> = ({ children }) => {
             : "rgba(125, 97, 103, 0.05)",
         borderRadius: 2,
         border: (theme) =>
-          `1px solid ${
-            theme.palette.mode === "dark"
-              ? "rgba(125, 97, 103, 0.2)"
-              : "rgba(125, 97, 103, 0.15)"
+          `1px solid ${theme.palette.mode === "dark"
+            ? "rgba(125, 97, 103, 0.2)"
+            : "rgba(125, 97, 103, 0.15)"
           }`,
       }}
     >

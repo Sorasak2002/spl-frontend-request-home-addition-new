@@ -14,9 +14,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import PhoneIcon from "@mui/icons-material/Phone";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FormPaper from "../FormPaper";
+import useDarkMode from "@/hooks/useDarkMode";
 
 const UnitDetailForm = () => {
   const theme = useTheme();
+  const isDarkMode = useDarkMode()
   return (
     <Box>
       <Typography
@@ -98,8 +100,7 @@ const UnitDetailForm = () => {
           <Chip
             label="เจ้าของบ้าน"
             size="small"
-            color="primary"
-            sx={{ fontWeight: 300 }}
+            sx={{ fontWeight: 300, color: 'white', backgroundColor: isDarkMode ? colors.primary.dark : colors.primary.main }}
           />
         </Box>
 
@@ -115,7 +116,6 @@ const UnitDetailForm = () => {
                 sm: "1 1 calc(50% - 12px)",
                 md: "1 1 calc(20% - 16px)",
               },
-              //   minWidth: { xs: "100%", sm: "250px" },
             },
           }}
         >

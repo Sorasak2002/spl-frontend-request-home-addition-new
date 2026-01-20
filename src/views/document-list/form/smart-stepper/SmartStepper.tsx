@@ -22,6 +22,7 @@ import {
   stepperLabelSx,
   stepperScrollContainerSx,
 } from "./SmartStepper.styles";
+import { colors } from "@/configs/colorConfig";
 
 // Sub Component
 const StepCircle = styled(Box, {
@@ -46,58 +47,53 @@ const StepCircle = styled(Box, {
   position: "relative",
   zIndex: 2,
   flexShrink: 0,
-  border: `3px solid ${
-    active || completed
-      ? theme.palette.primary.main
-      : theme.palette.mode === "dark"
+  border: `3px solid ${active || completed
+    ? colors.primary.main
+    : theme.palette.mode === "dark"
       ? "#444"
       : "#D0D0D0"
-  }`,
+    }`,
   backgroundColor:
     active || completed
-      ? theme.palette.primary.main
+      ? colors.primary.main
       : theme.palette.mode === "dark"
-      ? "#2A2A2A"
-      : "#FFFFFF",
+        ? "#2A2A2A"
+        : "#FFFFFF",
   color:
     active || completed
       ? "#fff"
       : theme.palette.mode === "dark"
-      ? "#999"
-      : "#666",
+        ? "#999"
+        : "#666",
   ...(active && {
-    boxShadow: `0 4px 16px 0 ${
-      theme.palette.mode === "dark"
-        ? "rgba(176, 145, 151, 0.5)"
-        : "rgba(125, 97, 103, 0.5)"
-    }, 0 0 0 4px ${
-      theme.palette.mode === "dark"
+    boxShadow: `0 4px 16px 0 ${theme.palette.mode === "dark"
+      ? "rgba(176, 145, 151, 0.5)"
+      : "rgba(125, 97, 103, 0.5)"
+      }, 0 0 0 4px ${theme.palette.mode === "dark"
         ? "rgba(176, 145, 151, 0.1)"
         : "rgba(125, 97, 103, 0.1)"
-    }`,
+      }`,
     transform: "scale(1.08)",
   }),
   ...(completed && {
-    boxShadow: `0 2px 8px 0 ${
-      theme.palette.mode === "dark"
-        ? "rgba(176, 145, 151, 0.25)"
-        : "rgba(125, 97, 103, 0.25)"
-    }`,
+    boxShadow: `0 2px 8px 0 ${theme.palette.mode === "dark"
+      ? "rgba(176, 145, 151, 0.25)"
+      : "rgba(125, 97, 103, 0.25)"
+      }`,
   }),
   "&:hover": clickable
     ? {
-        transform: active
-          ? "scale(1.12)"
-          : completed
+      transform: active
+        ? "scale(1.12)"
+        : completed
           ? "scale(1.06)"
           : "scale(1.03)",
-        boxShadow: `0 4px 20px 0 ${
-          theme.palette.mode === "dark"
-            ? "rgba(176, 145, 151, 0.4)"
-            : "rgba(125, 97, 103, 0.4)"
+      boxShadow: `0 4px 20px 0 ${theme.palette.mode === "dark"
+        ? "rgba(176, 145, 151, 0.4)"
+        : "rgba(125, 97, 103, 0.4)"
         }`,
-        borderColor: theme.palette.primary.main,
-      }
+      borderColor: colors.primary.main,
+    }
     : {},
 }));
 
@@ -110,8 +106,8 @@ const StepConnectorLine = styled(Box, {
   backgroundColor: active
     ? theme.palette.primary.main
     : theme.palette.mode === "dark"
-    ? "#2A2A2A"
-    : "#D0D0D0",
+      ? "#2A2A2A"
+      : "#D0D0D0",
   transition: "background-color 0.4s ease",
   flexGrow: 1,
   minWidth: 40,

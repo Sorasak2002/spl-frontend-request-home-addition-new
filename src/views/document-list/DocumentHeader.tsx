@@ -3,6 +3,9 @@
 import { Box, Typography, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { FC } from "react";
+import useDarkMode from "@/hooks/useDarkMode";
+import { colors } from "@/configs/colorConfig";
+import CustomButton from "@/components/mui/CustomButton";
 
 type DocumentsHeaderProps = {
   onCreateDocument: () => void;
@@ -11,6 +14,7 @@ type DocumentsHeaderProps = {
 const DocumentsHeader: FC<DocumentsHeaderProps> = ({
   onCreateDocument,
 }: DocumentsHeaderProps) => {
+  const isDarkMode = useDarkMode()
   return (
     <Box
       sx={{
@@ -31,20 +35,14 @@ const DocumentsHeader: FC<DocumentsHeaderProps> = ({
           Manage and track all project documents
         </Typography> */}
       </Box>
-      <Button
+      <CustomButton
         variant="contained"
         startIcon={<AddIcon />}
         onClick={onCreateDocument}
-        sx={{
-          backgroundColor: "primary.main",
-          "&:hover": {
-            backgroundColor: "primary.dark",
-          },
-          textTransform: "none",
-        }}
+
       >
         เพิ่มรายการ
-      </Button>
+      </CustomButton>
     </Box>
   );
 };

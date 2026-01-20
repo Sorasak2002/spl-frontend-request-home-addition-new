@@ -18,6 +18,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FormPaper from "../FormPaper";
 import CustomNumberField from "@/components/mui/CustomNumberField";
+import { colors } from "@/configs/colorConfig";
 
 const ContractorInformationForm = () => {
   const theme = useTheme();
@@ -28,7 +29,7 @@ const ContractorInformationForm = () => {
         sx={{
           fontWeight: 600,
           mb: 2,
-          borderBottom: `3px solid ${theme.palette.primary.main}`,
+          borderBottom: `3px solid ${colors.primary.main}`,
           display: "inline-block",
         }}
       >

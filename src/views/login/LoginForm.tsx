@@ -31,14 +31,17 @@ const LoginForm = () => {
   const { showAlert } = useAlert();
 
   const [email, setEmail] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
 
   const moveRightIconRef = useRef<MoveRightIconHandle>(null);
 
   const handleMoveRightHover = () => {
+    setIsHovered(true);
     moveRightIconRef.current?.startAnimation();
   };
 
   const handleMoveRightLeave = () => {
+    setIsHovered(false);
     moveRightIconRef.current?.stopAnimation();
   };
 
@@ -76,26 +79,49 @@ const LoginForm = () => {
             alignItems: "center",
             justifyContent: "center",
             gap: 1,
+            transition: "all 0.3s ease-in-out",
             "&:hover": {
               bgcolor: colors.primary.hover,
-              "& .move-right-icon": {
+            },
+            "& .move-right-icon": {
+              animation: "slideIn 0.5s ease-out forwards",
+            },
+            "@keyframes slideIn": {
+              "0%": {
+                opacity: 0,
+                transform: "translateX(-10px)",
+              },
+              "100%": {
                 opacity: 1,
                 transform: "translateX(0)",
               },
-            },
-            "& .move-right-icon": {
-              opacity: 0,
-              transform: "translateX(-10px)",
-              transition: "all 0.3s ease-in-out",
             },
           }}
           onMouseEnter={handleMoveRightHover}
           onMouseLeave={handleMoveRightLeave}
         >
-          <Box component="span" sx={{ fontSize: { xs: 15, md: 20 } }}>
+          <Box
+            component="span"
+            sx={{
+              fontSize: { xs: 15, md: 20 },
+            }}
+          >
             SUPALAI SINGLE SIGN ON
           </Box>
-          <MoveRightIcon ref={moveRightIconRef} className="move-right-icon" />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              maxWidth: isHovered ? "24px" : "0px",
+              opacity: isHovered ? 1 : 0,
+              overflow: "hidden",
+              transition: "all 0.3s ease-in-out",
+            }}
+          >
+            {isHovered && (
+              <MoveRightIcon ref={moveRightIconRef} className="move-right-icon" />
+            )}
+          </Box>
         </Button>
 
         {/* FIXME: Login AD for UAT */}

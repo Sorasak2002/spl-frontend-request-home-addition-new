@@ -20,11 +20,17 @@ const DocumentsHeader: FC<DocumentsHeaderProps> = ({
       sx={{
         mb: 4,
         display: "flex",
-        justifyContent: "space-between",
+        flexDirection: { xs: "column", sm: "row" },
+        justifyContent: { xs: "center", sm: "space-between" },
         alignItems: "center",
+        gap: { xs: 2, sm: 0 },
       }}
     >
-      <Box>
+      <Box
+        sx={{
+          textAlign: { xs: "center", sm: "left" },
+        }}
+      >
         <Typography
           variant="h4"
           sx={{ fontWeight: 600, color: "text.primary", mb: 1 }}
@@ -39,7 +45,6 @@ const DocumentsHeader: FC<DocumentsHeaderProps> = ({
         variant="contained"
         startIcon={<AddIcon />}
         onClick={onCreateDocument}
-
       >
         เพิ่มรายการ
       </CustomButton>

@@ -2,22 +2,7 @@
 
 import type React from "react";
 
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TablePagination,
-  IconButton,
-  Tooltip,
-  Switch,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, IconButton, Tooltip, Switch, useTheme } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { GridColDef } from "@mui/x-data-grid-pro";

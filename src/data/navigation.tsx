@@ -20,7 +20,7 @@ export interface NavigationMenuItem {
 
 export const NAVIGATION_MENU_ITEMS: NavigationMenuItem[] = [
   { text: "Home", icon: <HomeIcon />, path: "/home" },
-  { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
+  // { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
   { text: "Documents", icon: <DescriptionIcon />, path: "/document-list" },
   {
     text: "Settings",

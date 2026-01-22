@@ -12,6 +12,11 @@ import SmartStepper from "./smart-stepper/SmartStepper";
 import DocumentForm1 from "./document-form-steps/document-form-1/DocumentForm1";
 import DocumentForm2 from "./document-form-steps/document-form-2/DocumentForm2";
 import CustomButton from "@/components/mui/CustomButton";
+import DocumentForm3 from "./document-form-steps/document-form-3/DocumentForm3";
+import DocumentForm4 from "./document-form-steps/document-form-4/DocumentForm4";
+import DocumentForm5 from "./document-form-steps/document-form-5/DocumentForm5";
+import DocumentForm6 from "./document-form-steps/document-form-6/DocumentForm6";
+import DocumentForm7 from "./document-form-steps/document-form-7/DocumentForm7";
 
 type Props = {
   documentId?: string;
@@ -128,7 +133,7 @@ const steps = [
 const DocumentListFormPage: FC<Props> = ({ documentId }) => {
   const router = useRouter();
   const theme = useTheme();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
 
   const { handleSubmit, trigger } = useForm({
     mode: "onChange",
@@ -182,15 +187,15 @@ const DocumentListFormPage: FC<Props> = ({ documentId }) => {
       case 1:
         return <DocumentForm2 />;
       case 2:
-        return <Box sx={{ p: 3 }}>ข้อมูลการก่อสร้าง (Coming Soon)</Box>;
+        return <DocumentForm3 />;
       case 3:
-        return <Box sx={{ p: 3 }}>เอกสารแนบ (Coming Soon)</Box>;
+        return <DocumentForm4 />;
       case 4:
-        return <Box sx={{ p: 3 }}>รายละเอียดเพิ่มเติม (Coming Soon)</Box>;
+        return <DocumentForm5 />;
       case 5:
-        return <Box sx={{ p: 3 }}>ข้อมูลการเงิน (Coming Soon)</Box>;
+        return <DocumentForm6 />;
       case 6:
-        return <Box sx={{ p: 3 }}>การตรวจสอบ (Coming Soon)</Box>;
+        return <DocumentForm7 />;
       case 7:
         return <Box sx={{ p: 3 }}>ยืนยันข้อมูล (Coming Soon)</Box>;
       default:

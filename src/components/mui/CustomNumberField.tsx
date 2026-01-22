@@ -24,12 +24,14 @@ export default function NumberField({
   error,
   size = "medium",
   sx,
+  fullWidth,
   ...other
 }: BaseNumberField.Root.Props & {
   label?: React.ReactNode;
   size?: "small" | "medium";
   error?: boolean;
   sx?: SxProps<Theme>;
+  fullWidth?: boolean;
 }) {
   let id = React.useId();
   if (idProp) {
@@ -41,6 +43,7 @@ export default function NumberField({
       render={(props, state) => (
         <FormControl
           size={size}
+          fullWidth={fullWidth}
           ref={props.ref}
           disabled={state.disabled}
           required={state.required}
@@ -58,6 +61,7 @@ export default function NumberField({
         render={(props, state) => (
           <OutlinedInput
             label={label}
+            className={props.className}
             inputRef={props.ref}
             value={state.inputValue}
             onBlur={props.onBlur}

@@ -77,6 +77,7 @@ const ProtectedLayout: FC<ProtectedLayoutProps> = ({ children }) => {
           sx={{
             p: 3,
             minHeight: "100vh",
+            mb: isMobile ? 7 : 0,
             background: isDark ? gradientDark : gradientLight,
           }}
         >

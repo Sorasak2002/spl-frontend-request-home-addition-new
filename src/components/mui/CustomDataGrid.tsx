@@ -26,7 +26,7 @@ const DataGridPro = dynamic(
 );
 
 const CustomDataGrid = (props: DataGridProProps) => {
-  const {} = props;
+  const { } = props;
 
   const theme = useTheme();
 
@@ -39,6 +39,7 @@ const CustomDataGrid = (props: DataGridProProps) => {
       disableColumnMenu
       disableColumnFilter
       showColumnVerticalBorder
+
       hideFooter
       localeText={{
         noRowsLabel: "ไม่มีข้อมูล",

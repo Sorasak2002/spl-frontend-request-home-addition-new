@@ -15,12 +15,43 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import BadgeIcon from "@mui/icons-material/Badge";
 import FormPaper from "../FormPaper";
 import useDarkMode from "@/hooks/useDarkMode";
+import CustomIconButton from "@/components/mui/CustomIconButton";
+import EmailIcon from '@mui/icons-material/Email';
 
-const UnitDetailForm = () => {
+// ==================== Types ====================
+interface UnitDetailFormProps {
+  isDetail?: boolean;
+  data?: {
+    plotNumber?: string;
+    documentNumber?: string;
+    projectName?: string;
+    houseNumber?: string;
+    ownerName?: string;
+    phone?: string;
+    idCard?: string;
+  };
+}
+
+// ==================== Main Component ====================
+const UnitDetailForm = ({ isDetail = false, data }: UnitDetailFormProps) => {
   const theme = useTheme();
-  const isDarkMode = useDarkMode()
+
+  // ==================== Mock Data ====================
+  const defaultData = {
+    plotNumber: "",
+    documentNumber: "RD-202511005XX",
+    projectName: "ศุภาลัย ปาล์มสปริง เทพารักษ์",
+    houseNumber: "54/1",
+    ownerName: "นาย จักรกฤช วราศิลป์",
+    phone: "0816238500",
+    idCard: "1120100057770",
+  };
+
+  const formData = { ...defaultData, ...data };
+
   return (
     <Box>
+      {/* ==================== Header ==================== */}
       <Typography
         variant="h6"
         sx={{
@@ -32,6 +63,8 @@ const UnitDetailForm = () => {
       >
         รายละเอียดแปลง
       </Typography>
+
+      {/* ==================== Search Section ==================== */}
       <Box
         sx={{
           display: "flex",
@@ -41,38 +74,49 @@ const UnitDetailForm = () => {
           alignItems: { xs: "stretch", sm: "center" },
         }}
       >
-        <Box
+        {!isDetail ? (
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+            }}
+          >
+            <TextField
+              sx={{ width: { xs: "100%", sm: "auto" } }}
+              label="เลขแปลง"
+              size="small"
+              variant="outlined"
+              value={formData.plotNumber}
+            />
+            <Box>
+              <CustomIconButton
+                size="small"
+                className="btn-hover-scale"
+                sx={{ color: "white" }}
+              >
+                <SearchIcon />
+              </CustomIconButton>
+            </Box>
+          </Box>
+        ) : (<Box
           sx={{
             display: "flex",
             gap: 1,
           }}
         >
-          <TextField
-            sx={{ width: { xs: "100%", sm: "auto" } }}
-            label="เลขแปลง"
-            size="small"
-            variant="outlined"
-          />
-          <Box>
-            <IconButton
-              size="small"
-              className="btn-hover-scale"
-              sx={{
-                backgroundColor: colors.primary.main,
-                color: "white",
-                "&:hover": { backgroundColor: colors.primary.hover },
-              }}
-            >
-              <SearchIcon />
-            </IconButton>
-          </Box>
-        </Box>
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <Typography>เลขที่เอกสาร :</Typography>
-          <Typography className="font-bold">RD-202511005XX</Typography>
+          <Typography sx={{ fontWeight: 800, fontSize: "1rem" }} >เลขที่แปลง :</Typography>
+          <Typography sx={{ fontSize: "1rem" }} className="font-bold">1113</Typography>
+        </Box>)}
+
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          <Typography sx={{ fontWeight: 800, fontSize: "1rem" }}>เลขที่เอกสาร :</Typography>
+          <Typography sx={{ fontSize: "1rem" }}>{formData.documentNumber}</Typography>
         </Box>
       </Box>
 
+      {/* ==================== Form Content ==================== */}
+      {/* <FormPaper> */}
+      {/* ==================== Form Content ==================== */}
       <FormPaper>
         {/* Project Header */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
@@ -94,13 +138,14 @@ const UnitDetailForm = () => {
               variant="h6"
               sx={{ fontWeight: 600, color: "primary.main" }}
             >
-              ศุภาลัย ปาล์มสปริง เทพารักษ์
+              {formData.projectName}
             </Typography>
           </Box>
           <Chip
             label="เจ้าของบ้าน"
             size="small"
-            sx={{ fontWeight: 300, color: 'white', backgroundColor: isDarkMode ? colors.primary.dark : colors.primary.main }}
+            color="primary"
+            sx={{ fontWeight: 300 }}
           />
         </Box>
 
@@ -114,37 +159,39 @@ const UnitDetailForm = () => {
               flex: {
                 xs: "1 1 100%",
                 sm: "1 1 calc(50% - 12px)",
-                md: "1 1 calc(20% - 16px)",
+                md: "1 1 calc(33.33% - 16px)",
               },
             },
           }}
         >
-          {/* House Number */}
           <OwnerInfoBox
             title="เลขที่บ้าน"
-            data="54/1"
+            data={formData.houseNumber}
             icon={<HomeIcon color="primary" sx={{ fontSize: 20 }} />}
           />
 
-          {/* Full Name */}
           <OwnerInfoBox
             title="ชื่อ-นามสกุล"
-            data="นาย จักรกฤช วราศิลป์"
+            data={formData.ownerName}
             icon={<PersonIcon color="primary" sx={{ fontSize: 20 }} />}
           />
 
-          {/* Phone */}
           <OwnerInfoBox
             title="เบอร์โทรศัพท์"
-            data="0816238500"
+            data={formData.phone}
             icon={<PhoneIcon color="primary" sx={{ fontSize: 20 }} />}
           />
 
-          {/* ID Card Number */}
           <OwnerInfoBox
             title="เลขบัตรประชาชน"
-            data="1120100057770"
+            data={formData.idCard}
             icon={<BadgeIcon color="primary" sx={{ fontSize: 20 }} />}
+          />
+
+          <OwnerInfoBox
+            title="Email"
+            data={"XXX@gmail.com"}
+            icon={<EmailIcon color="primary" sx={{ fontSize: 20 }} />}
           />
         </Box>
       </FormPaper>
@@ -152,7 +199,7 @@ const UnitDetailForm = () => {
   );
 };
 
-// Sub Function
+// ==================== Sub Component ====================
 const OwnerInfoBox = ({
   title,
   data,

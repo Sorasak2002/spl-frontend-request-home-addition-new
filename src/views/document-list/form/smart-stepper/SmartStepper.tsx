@@ -22,7 +22,6 @@ import {
   stepperLabelSx,
   stepperScrollContainerSx,
 } from "./SmartStepper.styles";
-import { colors } from "@/configs/colorConfig";
 
 // Sub Component
 const StepCircle = styled(Box, {
@@ -48,14 +47,14 @@ const StepCircle = styled(Box, {
   zIndex: 2,
   flexShrink: 0,
   border: `3px solid ${active || completed
-    ? colors.primary.main
+    ? theme.palette.primary.main
     : theme.palette.mode === "dark"
       ? "#444"
       : "#D0D0D0"
     }`,
   backgroundColor:
     active || completed
-      ? colors.primary.main
+      ? theme.palette.primary.main
       : theme.palette.mode === "dark"
         ? "#2A2A2A"
         : "#FFFFFF",
@@ -92,7 +91,7 @@ const StepCircle = styled(Box, {
         ? "rgba(176, 145, 151, 0.4)"
         : "rgba(125, 97, 103, 0.4)"
         }`,
-      borderColor: colors.primary.main,
+      borderColor: theme.palette.primary.main,
     }
     : {},
 }));
@@ -256,8 +255,8 @@ const SmartStepper: FC<Props> = ({ steps, activeStep, onStepClick }) => {
                       <StepCircle
                         active={isActive}
                         completed={isCompleted}
-                        clickable={isClickable}
-                        onClick={() => isClickable && onStepClick(index)}
+                        //clickable={} //isClickable
+                        onClick={() => onStepClick(index)} // isClickable && 
                       >
                         {isCompleted ? (
                           <CheckIcon sx={{ fontSize: "1.3rem" }} />

@@ -1,10 +1,8 @@
-"use client";
-
+"use client";;
 import {
   Box,
   Typography,
   useTheme,
-  Button,
   alpha,
   IconButton,
   Grid,
@@ -24,7 +22,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import ImageIcon from "@mui/icons-material/Image";
 import AddIcon from "@mui/icons-material/Add";
-import CustomButton from "@/components/mui/CustomButton";
+import { getMainBoxStyle, getAddFileBoxStyle } from "./DropzoneUpload.styles";
 
 export interface FileWithPreview extends File {
   preview?: string;
@@ -59,7 +57,7 @@ const DEFAULT_ACCEPTED_TYPES = {
 };
 
 const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
-  maxFiles = 2,
+  maxFiles,
   acceptedFileTypes = DEFAULT_ACCEPTED_TYPES,
   onFilesChange,
   initialFiles = [],
@@ -94,7 +92,7 @@ const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
       });
 
       const updatedFiles = allowMultiple
-        ? [...files, ...newFilesWithPreview].slice(0, maxFiles)
+        ? (maxFiles ? [...files, ...newFilesWithPreview].slice(0, maxFiles) : [...files, ...newFilesWithPreview])
         : newFilesWithPreview.slice(0, 1);
 
       setFiles(updatedFiles);
@@ -103,12 +101,13 @@ const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
     [files, maxFiles, allowMultiple, onFilesChange]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
     accept: acceptedFileTypes,
-    maxFiles: maxFiles - files.length,
-    disabled: disabled || files.length >= maxFiles,
+    maxFiles: maxFiles ? maxFiles - files.length : undefined,
+    disabled: disabled || (!!maxFiles && files.length >= maxFiles),
     multiple: allowMultiple,
+    noClick: files.length > 0,
   });
 
   const handleRemoveFile = (index: number) => {
@@ -170,37 +169,14 @@ const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
   return (
     <Box
       {...getRootProps()}
-      sx={{
-        border: `2px dashed ${isDragActive
-          ? theme.palette.primary.main
-          : alpha(theme.palette.primary.main, 0.5)
-          }`,
-        borderRadius: 2,
-        backgroundColor: isDragActive
-          ? alpha(theme.palette.primary.main, 0.05)
-          : alpha(theme.palette.primary.main, 0.02),
-        padding: 4,
-        textAlign: "center",
-        cursor:
-          disabled || files.length >= maxFiles ? "not-allowed" : "pointer",
-        transition: "all 0.3s ease",
-        minHeight: files.length > 0 ? "auto" : minHeight,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        opacity: disabled ? 0.6 : 1,
-        "&:hover": {
-          backgroundColor:
-            disabled || files.length >= maxFiles
-              ? alpha(theme.palette.primary.main, 0.02)
-              : alpha(theme.palette.primary.main, 0.08),
-          borderColor:
-            disabled || files.length >= maxFiles
-              ? alpha(theme.palette.primary.main, 0.5)
-              : theme.palette.primary.main,
-        },
-      }}
+      sx={getMainBoxStyle(
+        theme,
+        isDragActive,
+        disabled,
+        files.length > 0,
+        !!maxFiles && files.length >= maxFiles,
+        minHeight
+      )}
     >
       <input {...getInputProps()} />
 
@@ -333,34 +309,13 @@ const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
           ))}
 
           {/* Add More Files Button */}
-          {files.length < maxFiles && allowMultiple && (
+          {(!maxFiles || files.length < maxFiles) && allowMultiple && (
             <Grid size={3}>
               <Box
-                sx={{
-                  height: "100%",
-                  minHeight: {
-                    xs: 250,
-                    md: typeof height === "number" ? height + 135 : 315,
-                  },
-                  border: `2px dashed ${alpha(
-                    theme.palette.primary.main,
-                    0.5
-                  )}`,
-                  borderRadius: 1,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.02),
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  transition: "all 0.3s",
-                  "&:hover": {
-                    backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                    borderColor: theme.palette.primary.main,
-                  },
-                }}
+                sx={getAddFileBoxStyle(theme, height)}
                 onClick={(e) => {
                   e.stopPropagation();
+                  open();
                 }}
               >
                 <AddIcon
@@ -386,7 +341,7 @@ const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
                     mt: 1,
                   }}
                 >
-                  (คลิกหรือลากไฟล์มาที่นี่)
+                  (คลิกเพื่อเลือกไฟล์)
                 </Typography>
               </Box>
             </Grid>
@@ -427,35 +382,6 @@ const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
             </Typography>
           )}
 
-          {/* Or Text */}
-          {!isDragActive && (
-            <>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "text.secondary",
-                  mb: 2,
-                }}
-              >
-                or
-              </Typography>
-
-              {/* Browse Button */}
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={disabled || files.length >= maxFiles}
-                sx={{
-                  fontWeight: 600,
-                  px: 4,
-                  py: 1.5,
-                }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Browse Files
-              </Button>
-            </>
-          )}
         </>
       )}
     </Box>

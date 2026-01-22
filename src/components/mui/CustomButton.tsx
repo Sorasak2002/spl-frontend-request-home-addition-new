@@ -24,7 +24,7 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
             startIcon={loading ? <CircularProgress size={20} color="inherit" /> : startIcon}
             sx={{
                 position: "relative",
-                backgroundColor: isDarkMode ? colors.primary.dark : colors.primary.main,
+                backgroundColor: isDarkMode ? colors.primary.light : colors.primary.main,
                 "&:hover": {
                     backgroundColor: colors.primary.hover,
                 },

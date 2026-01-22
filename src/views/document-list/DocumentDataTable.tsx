@@ -10,6 +10,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CustomDataGrid from "@/components/mui/CustomDataGrid";
+import useDarkMode from "@/hooks/useDarkMode";
+import { useThemeMode } from "@/contexts/ThemeContext";
 
 export interface Document {
   id: string;
@@ -47,6 +49,7 @@ const DocumentDataTable = ({
   onDelete,
 }: DocumentDataTableProps) => {
   const theme = useTheme();
+  const { mode } = useThemeMode();
 
   const columns: GridColDef[] = [
     {
@@ -158,9 +161,10 @@ const DocumentDataTable = ({
   ];
 
   return (
-    <Box>
-      <CustomDataGrid rows={documents} columns={columns} />
-    </Box>
+    <CustomDataGrid
+      rows={documents}
+      columns={columns}
+    />
   );
 };
 

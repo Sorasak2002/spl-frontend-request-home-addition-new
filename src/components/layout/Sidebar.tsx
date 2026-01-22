@@ -17,7 +17,6 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { createAlert, useAlert } from "../alert";
 import { colors } from "@/configs/colorConfig";
-import { useThemeMode } from "@/contexts/ThemeContext";
 import UserProfile from "./UserProfile";
 import { MenuIcon } from "../shared/motion-icons/MenuIcon";
 import { ChevronLeftIcon } from "../shared/motion-icons/ChevronLeft";
@@ -38,7 +37,6 @@ type SidebarProps = {
 const Sidebar = ({ open: controlledOpen, onToggle }: SidebarProps) => {
   const router = useRouter();
   const { showAlert } = useAlert();
-  const { mode } = useThemeMode();
   const pathname = usePathname();
   const [internalOpen, setInternalOpen] = useState(true);
   const [expandedMenus, setExpandedMenus] = useState<{

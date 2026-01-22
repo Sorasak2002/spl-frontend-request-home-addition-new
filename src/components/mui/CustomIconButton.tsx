@@ -29,11 +29,10 @@ export const CustomIconButton: React.FC<CustomIconButtonProps> = ({
             disabled={disabled || loading}
             sx={{
                 position: "relative",
-                backgroundColor: isDarkMode ? colors.primary.dark : colors.primary.main,
+                backgroundColor: isDarkMode ? colors.primary.light : colors.primary.main,
                 "&:hover": {
-                    backgroundColor: colors.primary.hover,
+                    backgroundColor: isDarkMode ? colors.primary.main : colors.primary.hover,
                 },
-
                 textTransform: "none",
                 ...sx,
             }}
